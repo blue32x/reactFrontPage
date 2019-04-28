@@ -8,4 +8,10 @@ export function setIgnoredYellowBox() {
     ];
 }
 
-export fuction
+/*
+ Global Variable
+*/
+//반찬 단가
+export var sideDishPrice = 3500;
+//공깃밥 단가
+export var ricePrice= 1000;

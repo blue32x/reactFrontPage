@@ -4,6 +4,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, Ca
 import classnames from 'classnames';
 import 'bootstrap/dist/css/bootstrap.css';
 import OrderContentsScreen from './OrderContentsScreen';
+import OrderRegistrationScreen from './OrderRegistrationScreen';
 import CompanyInqueryScreen from './CompanyInqueryScreen';
 export default class OrderManage extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ export default class OrderManage extends Component {
              <NavLink
                className={classnames({ active: this.state.activeTab === '2' })}
                onClick={() => { this.toggle('2');
-                 ReactDOM.render(<OrderContentsScreen />, document.getElementById('tab2'));
+                 ReactDOM.render(<OrderRegistrationScreen />, document.getElementById('tab2'));
                }}
              >
               주문등록

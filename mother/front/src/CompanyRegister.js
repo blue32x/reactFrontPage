@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import  {InputGroup, InputGroupAddon,Container,Row,Col,Table, InputGroupText, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Form,Button,FormGroup }  from  'reactstrap';
-//import PropTypes from 'prop-types'
 import request from 'superagent';
 import 'bootstrap/dist/css/bootstrap.css';
 export default class CompanyRegister extends Component {
@@ -11,7 +10,8 @@ export default class CompanyRegister extends Component {
      this.select = this.select.bind(this);
      this.onSubmit = this.onSubmit.bind(this);
      this.callHttp = this.callHttp.bind(this);
-     this.callbackGet = this.callbackGet.bind(this);
+     this.callbackPost = this.callbackPost.bind(this);
+     this.validatePhoneNumber = this.validatePhoneNumber.bind(this);
      this.state = {
        dropdownOpen: false,
        value : "010"
@@ -23,6 +23,7 @@ export default class CompanyRegister extends Component {
          dropdownOpen: !prevState.dropdownOpen
        }));
      }
+
    select(event) {
      this.setState({
         value: event.currentTarget.getAttribute("id")
@@ -55,8 +56,8 @@ export default class CompanyRegister extends Component {
                    <DropdownItem onClick={this.select} id="031">031</DropdownItem>
                  </DropdownMenu>
                </Dropdown>
-                 <Input placeholder="중간 번호" name="tel2"/>
-                 <Input placeholder="끝 번호" name="tel3"/>
+                 <Input placeholder="중간 번호" name="tel2" onChange={this.validatePhoneNumber}/>
+                 <Input placeholder="끝 번호" name="tel3" onChange={this.validatePhoneNumber}/>
              </InputGroup>
           </Col>
          </Row>
@@ -99,10 +100,10 @@ export default class CompanyRegister extends Component {
     request.post(URL)
     .set('Content-Type','application/x-www-form-urlencoded')
     .send({ companyNm: compNm,telNumber: telNbr })
-    .end(this.callbackGet);
+    .end(this.callbackPost);
 
   }
-  callbackGet(err, res)
+  callbackPost(err, res)
   {
     if(err)
     {
@@ -113,5 +114,19 @@ export default class CompanyRegister extends Component {
     }
     console.log(res.body);
     //정상응답을 받았을 경우 화면을 초기화한다.
+  }
+
+  /*  핸드폰 번호를 입력하는 form에는 숫자만 가능
+   *
+   */
+  validatePhoneNumber(event)
+  {
+    var number = event.target.value;
+    var regexpattern = /\D+/; //0~9 사이의 숫자이면서 최대 4자리 --> 숫자외의 문자열이 검색되면 오류
+    if(regexpattern.exec(number)!==null)
+   {
+      window.alert("숫자를 입력해주세요.");
+      //
+    }
   }
 }
