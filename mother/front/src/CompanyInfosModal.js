@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import request from 'superagent';
-import  {InputGroup, InputGroupAddon,Container,Row,Col,Table, InputGroupText, Input, Dropdown, DropdownToggle, DropdownMenu, DropdownItem,Form,Button,FormGroup,Modal, ModalHeader, ModalBody, ModalFooter }  from  'reactstrap';
+import  {Table,Button,Modal, ModalHeader, ModalBody, ModalFooter }  from  'reactstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default class CompanyInfosModal extends Component {
@@ -37,35 +36,30 @@ export default class CompanyInfosModal extends Component {
     console.log("called componentWillReceiveProps");
     var checker = nextProps.pCheck;
     var modal =nextProps.pModal;
-    var modalStat = false;
-    console.log("child_checker : "+checker);
-    console.log("child_modal : "+modal);
 
     if(checker)
     {
-      console.log("checker : "+ checker);
+
       modal =false;
     }
     else
     {
-      console.log("checker : "+ checker);
+      /*
+      *  선택, 취소 버튼에 의해서 callbackFunc가 호출 될 경우를 위해 상태값 고나ㄹ
+      */
+      if(this.state.isBtnCalled)
+      {
+      }
+      else
+      {
+        const URL = 'http://localhost:8080/MyBlog/company';
+        request.get(URL)
+       // .set('Content-Type','text/html')
+        .query({ CompanyNm: '', TelNbr: '' })
+        .end(this.callbackGet);
+      }
     }
 
-    /*
-    *  선택, 취소 버튼에 의해서 callbackFunc가 호출 될 경우를 위해 상태값 고나ㄹ
-    */
-    if(this.state.isBtnCalled)
-    {
-      console.log("btn");
-    }
-    else
-    {
-      const URL = 'http://localhost:8080/MyBlog/company';
-      request.get(URL)
-     // .set('Content-Type','text/html')
-      .query({ CompanyNm: '', TelNbr: '' })
-      .end(this.callbackGet);
-    }
     this.setState(prevState => ({
       modal : modal,
       isBtnCalled:false
@@ -157,8 +151,6 @@ export default class CompanyInfosModal extends Component {
    var compayNm =  row.cells[1].innerText;
    var compayTelNbr =  row.cells[2].innerText;
 
-   console.log(compayNm);
-   console.log(compayTelNbr);
    this.setState(prevState => ({
      compayNm: compayNm,
      compayTelNbr:compayTelNbr,
@@ -170,7 +162,6 @@ export default class CompanyInfosModal extends Component {
 
 //ㅟ소 버튼 클릭 시 이벤트
 cancelFunc = () =>{
-  console.log(2);
   var childInfo={
     modal:false,
     companyNm: "",

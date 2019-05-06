@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import 'bootstrap/dist/css/bootstrap.css';
 import OrderContentsScreen from './OrderContentsScreen';
@@ -65,7 +65,7 @@ export default class OrderManage extends Component {
          <TabContent activeTab={this.state.activeTab}>
            <TabPane tabId="1">
              <div id="tab1">
-
+               <CompanyInqueryScreen></CompanyInqueryScreen>
              </div>
            </TabPane>
            <TabPane tabId="2">
